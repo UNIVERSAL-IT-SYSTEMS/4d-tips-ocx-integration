@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta http-equiv="content-language" content="ja" />
+	<title>VisualCard</title>
+</head>
+
+<body>
+
+<p><object id="VisualCard" classid="clsid:F2F7F2A6-E582-11D1-89AC-00C04FCAF6E3" align="baseline" border="0" width="50" height="50"></object></p>
+
+<script type="text/javascript"><!--
+
+function VisualCard_clear(){
+        VisualCard.ClearCommunication();
+        VisualCard.Release();
+        VisualCard.Close();
+}
+
+//COMMON
+
+function VisualCard_start(){
+        return VisualCard.Communication(0x59, '', 0, true);
+}
+
+function VisualCard_open(portNum,baudRate,byteSize,parity){
+        return VisualCard.Open(portNum,baudRate,byteSize,parity);
+}
+
+function VisualCard_claim(){
+        return VisualCard.Claim(0);
+}
+
+//WRITE
+
+function VisualCard_beginWrite(writeString){
+        return VisualCard.Communication(0x39, writeString, 0, true);
+}
+
+function VisualCard_write(){
+        return VisualCard.Communication(0x31, '2', 0, true);
+}
+
+function VisualCard_endWrite(){
+        return VisualCard.Communication(0x59, '', 0, true);
+}
+
+//READ
+
+function VisualCard_beginRead(){
+        return VisualCard.Communication(0x22, '', 0, true);
+}
+
+function VisualCard_endRead(){
+		var returnValue = VisualCard.RxString;
+        VisualCard.Communication(0x59, '', 0, true);
+		return returnValue;
+}
+
+//PRINT
+
+function VisualCard_beginPrint(){
+        return VisualCard.Communication(0x40, '', 0, true);
+}
+
+function VisualCard_print(printString){
+        return VisualCard.Communication(0x41, printString, 0, true);
+}
+
+function VisualCard_endPrint(){
+        return VisualCard.Communication(0x46, '1', 0, true);
+}
+
+//EJECT
+
+function VisualCard_eject(){
+        return VisualCard.Communication(0x50, '1', 0, true);
+}
+
+//--></script>
+
+<script type="text/javascript" for="VisualCard" event="CommunicationEvent(nResult,nCommunicationID)"><!--
+	
+    switch(nResult)
+    {
+		case 0:
+			location.href= 'http://communicationevent/SUCCESS/';			
+            break;
+			
+		case 101:
+			location.href= 'http://communicationevent/ERROR/CLOSED/';			
+            break;				
+
+		case 102:
+			location.href= 'http://communicationevent/ERROR/NOTCLAIMED/';			
+            break;	
+			
+		case 103:
+			location.href= 'http://communicationevent/ERROR/ILLEGAL/';			
+            break;
+
+		case 104:
+			location.href= 'http://communicationevent/ERROR/NOCONTROL/';			
+            break;	
+																
+        case 105:
+			location.href= 'http://communicationevent/ERROR/NOHARDWARE/';						
+            break;
+			
+		case 106:
+			location.href= 'http://communicationevent/ERROR/CLEAR/';			
+            break;	
+			
+		case 107:
+			location.href= 'http://communicationevent/ERROR/TIMEOUT/';			
+            break;									
+
+		case 108:
+			location.href= 'http://communicationevent/ERROR/BUSY/';			
+            break;
+	
+		case 109:
+			location.href= 'http://communicationevent/ERROR/NOBUSY/';			
+            break;
+																																																										
+        case 110:
+			location.href= 'http://communicationevent/ERROR/DSR_BUSY/';	
+            break;			
+
+        default:
+            break;
+    }
+					
+//--></script>
+
+</body>
+
+</html>
